@@ -7,8 +7,8 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 RUN groupadd -r user && useradd --no-log-init -r -g user user
 
 # Copy code as root first
-COPY . /code
-RUN chown -R user:user /code
+USER user
+COPY --chown=user:user --chmod=755 . /code
 
 # Install Python dependencies using UV
 RUN mkdir -p /code/.cache/matplotlib
@@ -29,7 +29,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 RUN echo '#!/bin/bash\n\
 mkdir -p /output\n\
 chown -R user:user /output\n\
-exec "$@"' > /entrypoint.sh && chmod +x /entrypoint.sh
+exec "$@"' > /code/entrypoint.sh && chmod +x /code/entrypoint.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/code/entrypoint.sh"]
 CMD ["/code/scripts/entrypoint.sh"]
