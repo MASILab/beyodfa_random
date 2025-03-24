@@ -9,7 +9,7 @@ See `Dockerfile` for an example of setting up the Docker container.
 To build this Docker container, clone the repository and run the following command in the root directory:
 
 ```bash
-DOCKER_BUILDKIT=1 sudo docker build -t beyondfa_random:v1.0.0 .
+DOCKER_BUILDKIT=1 sudo docker build -t beyondfa_random:v1.0.1 .
 ```
 
 The Docker runs the code from `scripts/entrypoint.sh`.
@@ -32,5 +32,5 @@ sudo docker run --rm\
     -e METRIC=random_features \
     -v $input_dir:/input \
     -v $output_dir:/output \
-    beyondfa_random:v1.0.0
+    beyondfa_random:v1.0.1
 ```
